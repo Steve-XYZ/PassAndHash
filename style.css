@@ -206,3 +206,61 @@ input:focus {
 .toggle-password:hover {
   color: #333; /* Cambia el color del icono al pasar el ratón */
 }
+.strength-meter {
+  margin-top: 8px; /* Espacio superior */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Espacio entre la barra y el texto */
+  height: 20px;
+  /* Inicialmente oculto hasta que se escriba algo */
+  visibility: hidden;
+}
+
+.strength-bar-container {
+  flex-grow: 1; /* Ocupa el espacio disponible */
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0%; /* Empieza vacía */
+  border-radius: 4px;
+  transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Animación suave */
+}
+
+.strength-text {
+  font-size: 12px;
+  font-weight: 600;
+  width: 80px; /* Ancho fijo para que no se mueva el layout */
+}
+
+/* Clases de colores para la barra */
+.strength-bar.weak {
+  background-color: #dc3545;
+}
+.strength-bar.medium {
+  background-color: #ffc107;
+}
+.strength-bar.strong {
+  background-color: #28a745;
+}
+.strength-bar.very-strong {
+  background-color: #177245;
+}
+
+/* Clases de colores para el texto */
+.strength-text.weak {
+  color: #dc3545;
+}
+.strength-text.medium {
+  color: #b88b00;
+}
+.strength-text.strong {
+  color: #28a745;
+}
+.strength-text.very-strong {
+  color: #177245;
+}
