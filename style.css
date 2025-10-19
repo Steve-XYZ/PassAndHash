@@ -206,3 +206,39 @@ input:focus {
 .toggle-password:hover {
   color: #333; /* Cambia el color del icono al pasar el ratón */
 }
+
+/* --- Estilos para el Generador de Contraseñas Aleatorias --- */
+.generator-section {
+  background: #eef4ff;
+  border: 1px solid #cddfff;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.generator-section h2 {
+  color: #4a5568;
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea; /* Color del checkbox */
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #555;
+  cursor: pointer;
+}

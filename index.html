@@ -13,6 +13,40 @@
         Genera un hash seguro para tu contraseña de administrador
       </p>
 
+      <div class="generator-section">
+        <h2>Generador de Contraseña Aleatoria</h2>
+        <div class="input-group">
+          <label for="passwordLength">Longitud:</label>
+          <input type="number" id="passwordLength" value="12" min="4" max="64" />
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeUppercase" checked />
+          <label for="includeUppercase">Mayúsculas (A-Z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeLowercase" checked />
+          <label for="includeLowercase">Minúsculas (a-z)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeNumbers" checked />
+          <label for="includeNumbers">Números (0-9)</label>
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="includeSymbols" />
+          <label for="includeSymbols">Símbolos (!@#$)</label>
+        </div>
+        <button class="generate-btn" id="generateRandomPasswordBtn">
+          Generar Contraseña Aleatoria
+        </button>
+        <div class="result-section">
+          <div class="result-label">Contraseña Generada:</div>
+          <div class="hash-display" id="randomPasswordDisplay"></div>
+          <button class="copy-btn" id="copyRandomPasswordBtn">
+            📋 Copiar Contraseña
+          </button>
+        </div>
+      </div>
+
       <div class="input-group">
         <label for="password">Contraseña:</label>
         <div class="password-wrapper">
