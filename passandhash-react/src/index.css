@@ -1,0 +1,519 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+input[type="password"],
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.rounds-info {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.generate-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.generate-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.generate-btn:active {
+  transform: translateY(0);
+}
+
+.generate-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result-section {
+  margin-top: 30px;
+  padding: 25px;
+  background: #f0f7ff;
+  border-radius: 12px;
+  border: 2px solid #667eea;
+}
+
+.result-label {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.hash-display {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  word-break: break-all;
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  color: #000;
+  border: 2px solid #667eea;
+  margin-bottom: 15px;
+  line-height: 1.8;
+  min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.copy-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.copy-btn:hover {
+  background: #218838;
+}
+
+.copy-btn:active {
+  background: #1e7e34;
+}
+
+.security-note {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #856404;
+}
+
+.security-note strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hidden {
+  display: none;
+}
+.password-wrapper {
+  position: relative; /* Contenedor para el posicionamiento absoluto del botón */
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%); /* Centra el botón verticalmente */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+}
+
+.toggle-password:hover {
+  color: #333; /* Cambia el color del icono al pasar el ratón */
+}
+
+/* --- Estilos para el Generador de Contraseñas Aleatorias --- */
+.generator-section {
+  background: #eef4ff;
+  border: 1px solid #cddfff;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+
+.generator-section h2 {
+  color: #4a5568;
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  accent-color: #667eea; /* Color del checkbox */
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #555;
+  cursor: pointer;
+}
+
+/* --- Dark Mode Styles --- */
+body.dark-mode {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+}
+
+body.dark-mode .container {
+  background: #3b4a5a;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode h1,
+body.dark-mode h2 {
+  color: #ecf0f1;
+}
+
+body.dark-mode .subtitle,
+body.dark-mode label,
+body.dark-mode .rounds-info,
+body.dark-mode .strength-text {
+  color: #bdc3c7;
+}
+
+body.dark-mode input[type="password"],
+body.dark-mode input[type="text"],
+body.dark-mode input[type="number"],
+body.dark-mode select {
+  background: #2c3e50;
+  border-color: #555;
+  color: #ecf0f1;
+}
+
+body.dark-mode input:focus {
+  border-color: #667eea;
+}
+
+body.dark-mode .result-section {
+  background: #2c3e50;
+  border-color: #667eea;
+}
+
+body.dark-mode .hash-display {
+  background: #22303d;
+  border-color: #667eea;
+  color: #ecf0f1;
+}
+
+body.dark-mode .security-note {
+  background: #4a4a3a;
+  border-left-color: #d4ac0d;
+  color: #f1c40f;
+}
+
+body.dark-mode .toggle-password {
+  color: #bdc3c7;
+}
+
+body.dark-mode .toggle-password:hover {
+  color: #ecf0f1;
+}
+
+body.dark-mode .strength-bar-container {
+  background-color: #555;
+}
+
+body.dark-mode .strength-bar.weak {
+  background-color: #e74c3c;
+}
+body.dark-mode .strength-bar.medium {
+  background-color: #f1c40f;
+}
+body.dark-mode .strength-bar.strong {
+  background-color: #2ecc71;
+}
+body.dark-mode .strength-bar.very-strong {
+  background-color: #1abc9c;
+}
+
+body.dark-mode .strength-text.weak {
+  color: #e74c3c;
+}
+body.dark-mode .strength-text.medium {
+  color: #f1c40f;
+}
+body.dark-mode .strength-text.strong {
+  color: #2ecc71;
+}
+body.dark-mode .strength-text.very-strong {
+  color: #1abc9c;
+}
+
+.theme-toggle-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: #764ba2;
+}
+
+body.dark-mode .theme-toggle-btn {
+  background: #34495e;
+}
+
+body.dark-mode .theme-toggle-btn:hover {
+  background: #2c3e50;
+}
+
+/* --- Toast Notifications --- */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background-color: #333;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  min-width: 250px;
+  animation: fadeIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
+}
+
+.toast-error {
+  background-color: #dc3545;
+}
+
+.toast-warning {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.toast-info {
+  background-color: #17a2b8;
+}
+
+.toast-success {
+  background-color: #28a745;
+}
+
+.toast-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.toast-warning .toast-close-btn {
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .generate-btn,
+  .copy-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .hash-display {
+    font-size: 13px;
+    padding: 15px;
+  }
+
+  .security-note {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .toast-container {
+    top: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 11px;
+  }
+
+  .input-group label {
+    font-size: 12px;
+  }
+
+  input[type="password"],
+  input[type="text"],
+  input[type="number"],
+  select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .rounds-info {
+    font-size: 10px;
+  }
+
+  .generate-btn,
+  .copy-btn {
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+
+  .result-section {
+    padding: 15px;
+  }
+
+  .hash-display {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
