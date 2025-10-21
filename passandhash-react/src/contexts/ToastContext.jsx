@@ -1,16 +1,12 @@
-import React, { useState, createContext, useContext } from 'react';
-import Toast from './Toast';
+import React, { useState, createContext } from "react";
+import Toast from "../components/Toast";
 
 const ToastContext = createContext();
-
-export const useToast = () => {
-  return useContext(ToastContext);
-};
 
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);
 
-  const showToast = (message, type = 'info') => {
+  const showToast = (message, type = "info") => {
     const id = Date.now();
     setToasts((prevToasts) => [...prevToasts, { id, message, type }]);
   };

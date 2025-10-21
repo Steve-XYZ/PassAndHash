@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from 'react';
+// src/components/Toast.jsx
+import React, { useEffect, useState } from "react";
 
 const Toast = ({ message, type, id, onClose }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      onClose(id);
-    }, 3000); // Toast disappears after 3 seconds
+    // Inicia el temporizador para el desvanecimiento
+    const fadeOutTimer = setTimeout(() => {
+      setIsFadingOut(true);
+    }, 2500); // Empieza a desvanecerse a los 2.5s
 
-    return () => clearTimeout(timer);
+    // Inicia el temporizador para la eliminación final del DOM
+    const removeTimer = setTimeout(() => {
+      onClose(id);
+    }, 3000); // Se elimina completamente a los 3s (dando 0.5s para la animación)
+
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(removeTimer);
+    };
   }, [id, onClose]);
 
-  if (!isVisible) return null;
-
-  const toastClass = `toast toast-${type}`;
+  const toastClass = `toast toast-${type} ${isFadingOut ? "fade-out" : ""}`;
 
   return (
     <div className={toastClass}>

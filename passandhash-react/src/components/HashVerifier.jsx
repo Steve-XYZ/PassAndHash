@@ -1,46 +1,56 @@
-import React, { useState } from 'react';
-import bcrypt from 'bcryptjs';
-import * as argon2 from 'argon2-browser';
-import { useToast } from './ToastContainer';
-import { useToast } from './ToastContainer';
-import { useToast } from './ToastContainer';
-import { useToast } from './ToastContainer';
+import React, { useState } from "react";
+// Importamos nuestra nueva función de utilidad
+import { verifyHashWithOptions } from "../utils/cryptoUtils";
+import { useToast } from "../hooks/useToast";
 
 const HashVerifier = () => {
-  const [password, setPassword] = useState('');
-  const [hash, setHash] = useState('');
-  const [algorithm, setAlgorithm] = useState('bcrypt');
-  const [result, setResult] = useState('');
-  const [verifying, setVerifying] = useState(false);
+  const [password, setPassword] = useState("");
+  const [hash, setHash] = useState("");
+  const [algorithm, setAlgorithm] = useState("bcrypt");
+
+  // 1. Estado de resultado mejorado: almacena un 'status' para estilizar la UI
+  const [result, setResult] = useState({
+    status: "idle",
+    message: "El resultado aparecerá aquí",
+  });
+  const [isVerifying, setIsVerifying] = useState(false);
   const showToast = useToast();
 
-  const verifyHash = async () => {
+  const handleVerifyHash = async () => {
     if (!password || !hash) {
-      showToast('Por favor ingresa la contraseña y el hash', 'error');
+      showToast("Por favor ingresa la contraseña y el hash", "warning");
       return;
     }
 
-    setVerifying(true);
-    setResult('Verificando...');
+    setIsVerifying(true);
+    setResult({ status: "verifying", message: "Verificando..." });
 
     try {
-      let match = false;
-      switch (algorithm) {
-        case 'bcrypt':
-          match = await bcrypt.compare(password, hash);
-          break;
-        case 'argon2':
-          match = await argon2.verify({ pass: password, encoded: hash });
-          break;
-        default:
-          throw new Error('Algoritmo no soportado para verificación');
+      // 2. La lógica compleja ahora es una sola llamada a nuestra utilidad
+      const options = { algorithm, password, hash };
+      const match = await verifyHashWithOptions(options);
+
+      // 3. Actualizamos el estado con un status semántico
+      if (match) {
+        setResult({
+          status: "match",
+          message: "✅ ¡Coinciden! El hash corresponde a la contraseña.",
+        });
+      } else {
+        setResult({
+          status: "mismatch",
+          message: "❌ No coinciden. El hash es incorrecto.",
+        });
       }
-      setResult(match ? '✅ Las contraseñas coinciden' : '❌ Las contraseñas no coinciden');
     } catch (error) {
-      showToast('Error al verificar el hash: ' + error.message, 'error');
-      setResult('Error al verificar el hash');
+      console.error("Error al verificar:", error);
+      showToast(`Error: ${error.message}`, "error");
+      setResult({
+        status: "error",
+        message: "❗️ Hubo un error durante la verificación.",
+      });
     } finally {
-      setVerifying(false);
+      setIsVerifying(false);
     }
   };
 
@@ -49,7 +59,12 @@ const HashVerifier = () => {
       <h2>Verificador de Hash</h2>
       <div className="input-group">
         <label htmlFor="verify-algorithm">Algoritmo:</label>
-        <select id="verify-algorithm" value={algorithm} onChange={(e) => setAlgorithm(e.target.value)}>
+        <select
+          id="verify-algorithm"
+          value={algorithm}
+          onChange={(e) => setAlgorithm(e.target.value)}
+          disabled={isVerifying}
+        >
           <option value="bcrypt">bcrypt</option>
           <option value="argon2">Argon2</option>
         </select>
@@ -62,6 +77,7 @@ const HashVerifier = () => {
           placeholder="Ingresa la contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isVerifying}
         />
       </div>
       <div className="input-group">
@@ -72,24 +88,28 @@ const HashVerifier = () => {
           placeholder="Ingresa el hash a verificar"
           value={hash}
           onChange={(e) => setHash(e.target.value)}
+          disabled={isVerifying}
         />
       </div>
       <button
         className="generate-btn"
-        onClick={verifyHash}
-        disabled={verifying}
+        onClick={handleVerifyHash}
+        disabled={isVerifying}
       >
-        {verifying ? (
+        {isVerifying ? (
           <>
             <span className="spinner"></span>Verificando...
           </>
         ) : (
-          'Verificar Hash'
+          "Verificar Hash"
         )}
       </button>
       <div className="result-section">
         <div className="result-label">Resultado:</div>
-        <div className="hash-display">{result}</div>
+        {/* 4. El display ahora tiene una clase dinámica basada en el status del resultado */}
+        <div className={`hash-display result--${result.status}`}>
+          {result.message}
+        </div>
       </div>
     </div>
   );
