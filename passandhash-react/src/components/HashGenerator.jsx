@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 // 1. IMPORTACIONES ORGANIZADAS
 // Se importa la lógica de hashing desde un archivo de utilidades para mantener este componente limpio.
-import { generateHashWithOptions } from "../utils/cryptoUtils";
+import { generateHashWithOptions } from "../utils/utils.js";
 // Se importan componentes reutilizables
 import StrengthMeter from "./StrengthMeter";
 import { EyeIcon, EyeSlashIcon } from "./Icons"; // Asumiendo que creaste un archivo Icons.jsx

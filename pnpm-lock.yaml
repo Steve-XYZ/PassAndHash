@@ -1,0 +1,31 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      argon2-browser:
+        specifier: ^1.18.0
+        version: 1.18.0
+      bcryptjs:
+        specifier: ^3.0.2
+        version: 3.0.2
+
+packages:
+
+  argon2-browser@1.18.0:
+    resolution: {integrity: sha512-ImVAGIItnFnvET1exhsQB7apRztcoC5TnlSqernMJDUjbc/DLq3UEYeXFrLPrlaIl8cVfwnXb6wX2KpFf2zxHw==}
+
+  bcryptjs@3.0.2:
+    resolution: {integrity: sha512-k38b3XOZKv60C4E2hVsXTolJWfkGRMbILBIe2IBITXciy5bOsTKot5kDrf3ZfufQtQOUN5mXceUEpU1rTl9Uog==}
+    hasBin: true
+
+snapshots:
+
+  argon2-browser@1.18.0: {}
+
+  bcryptjs@3.0.2: {}

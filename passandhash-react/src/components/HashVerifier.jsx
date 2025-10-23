@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // Importamos nuestra nueva función de utilidad
-import { verifyHashWithOptions } from "../utils/cryptoUtils";
+import { verifyHashWithOptions } from "../utils/utils.js";
 import { useToast } from "../hooks/useToast";
 
 const HashVerifier = () => {

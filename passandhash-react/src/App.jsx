@@ -1,34 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import HashGenerator from './components/HashGenerator';
-import PasswordGenerator from './components/PasswordGenerator';
-import HashVerifier from './components/HashVerifier';
-import './App.css';
+// src/App.jsx
+import React from "react";
+import HomePage from "./pages/HomePage";
+// Ya no necesitamos './App.css' aquí si los estilos son globales
+// y se importan en `main.jsx` o `index.css`.
 
 function App() {
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'light';
-  });
-
-  useEffect(() => {
-    document.body.className = theme + '-mode';
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
-
-  return (
-    <div className="container">
-      <button className="theme-toggle-btn" onClick={toggleTheme}>
-        {theme === 'light' ? '🌙 Modo Oscuro' : '☀️ Modo Claro'}
-      </button>
-      <HashGenerator />
-      <PasswordGenerator />
-      <HashVerifier />
-    </div>
-  );
+  // App ahora no tiene estado ni lógica.
+  // Su único trabajo es renderizar el layout principal o las rutas.
+  return <HomePage />;
 }
 
 export default App;
