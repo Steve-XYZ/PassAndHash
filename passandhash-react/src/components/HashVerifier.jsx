@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // Importamos nuestra nueva función de utilidad
 import { verifyHashWithOptions } from "../utils/utils.js";
 import { useToast } from "../hooks/useToast";
@@ -67,12 +67,14 @@ const HashVerifier = () => {
         >
           <option value="bcrypt">bcrypt</option>
           <option value="argon2">Argon2</option>
+          <option value="sha256">SHA-256</option>
+          <option value="sha512">SHA-512</option>
         </select>
       </div>
       <div className="input-group">
         <label htmlFor="verify-password">Contraseña en texto plano:</label>
         <input
-          type="text"
+          type="password"
           id="verify-password"
           placeholder="Ingresa la contraseña"
           value={password}

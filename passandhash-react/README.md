@@ -1,16 +1,60 @@
-# React + Vite
+# PassAndHash (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para trabajar localmente con contraseñas y hashes en el navegador:
 
-Currently, two official plugins are available:
+- Generación de hash con `bcrypt`, `argon2`, `sha256`, `sha512`.
+- Verificación de hash para `bcrypt`, `argon2`, `sha256`, `sha512`.
+- Generador de contraseñas aleatorias con reglas de complejidad.
+- Medidor de fortaleza y toasts de feedback.
+- Tema claro/oscuro persistido en `localStorage`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## React Compiler
+- React 19
+- Vite (rolldown-vite)
+- bcryptjs
+- argon2-browser (WASM)
+- ESLint
+- Vitest + Testing Library
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Requisitos
 
-## Expanding the ESLint configuration
+- Node.js 20+
+- npm 10+ (o pnpm 9+)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Ejecución local
+
+```bash
+npm install
+npm run dev
+```
+
+## Scripts
+
+```bash
+npm run lint
+npm run test
+npm run test:coverage
+npm run build
+npm run preview
+```
+
+## Seguridad y alcance
+
+- Esta app ejecuta operaciones criptográficas del lado cliente.
+- El hash no reemplaza políticas de backend: en producción real, la verificación final y controles de autenticación deben vivir en servidor.
+- Para `argon2`, los parámetros afectan rendimiento y resistencia: subir memoria/iteraciones mejora costo de ataque pero aumenta tiempo de cómputo.
+
+## Estructura principal
+
+- `src/components/HashGenerator.jsx`: flujo de generación.
+- `src/components/HashVerifier.jsx`: flujo de validación.
+- `src/components/PasswordGenerator.jsx`: generador de contraseñas.
+- `src/utils/utils.js`: utilidades criptográficas.
+- `src/contexts/ToastContext.jsx`: estado global de notificaciones.
+
+## Estado de calidad
+
+- Lint configurado con ESLint.
+- Pruebas unitarias/componentes críticas con Vitest.
+- CI preparado para validar `lint`, `test` y `build` en push/PR.

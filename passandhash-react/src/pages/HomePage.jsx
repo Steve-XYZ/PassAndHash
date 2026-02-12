@@ -1,5 +1,4 @@
 // src/pages/HomePage.jsx
-import React from "react";
 import HashGenerator from "../components/HashGenerator";
 import PasswordGenerator from "../components/PasswordGenerator";
 import HashVerifier from "../components/HashVerifier";

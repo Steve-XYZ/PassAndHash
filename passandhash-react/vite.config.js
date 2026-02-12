@@ -11,4 +11,14 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["argon2-browser"], // Excluye argon2 de la pre-optimización de Vite
   },
+  test: {
+    environment: "jsdom",
+    setupFiles: "./src/test/setup.js",
+    globals: true,
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "lcov"],
+      include: ["src/utils/**/*.js", "src/components/**/*.{js,jsx}"],
+    },
+  },
 });

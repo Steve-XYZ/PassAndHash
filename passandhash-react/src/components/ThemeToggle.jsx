@@ -1,5 +1,5 @@
 // src/components/ThemeToggle.jsx
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ThemeToggle = () => {
   // 1. La lógica del tema ahora vive aquí, encapsulada y autónoma.

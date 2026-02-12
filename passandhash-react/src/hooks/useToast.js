@@ -3,5 +3,9 @@ import { useContext } from "react";
 import { ToastContext } from "../contexts/ToastContext"; // <-- Importa el contexto
 
 export const useToast = () => {
-  return useContext(ToastContext);
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error("useToast debe usarse dentro de ToastProvider");
+  }
+  return context;
 };

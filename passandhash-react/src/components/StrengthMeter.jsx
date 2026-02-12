@@ -1,5 +1,3 @@
-import React from 'react';
-
 const StrengthMeter = ({ password }) => {
   const checkPasswordStrength = (password) => {
     let score = 0;

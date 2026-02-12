@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 // 1. IMPORTACIONES ORGANIZADAS
 // Se importa la lógica de hashing desde un archivo de utilidades para mantener este componente limpio.
@@ -62,14 +62,17 @@ const HashGenerator = () => {
   /**
    * Maneja el copiado al portapapeles.
    */
-  const handleCopyToClipboard = () => {
+  const handleCopyToClipboard = async () => {
     if (!result.hash || result.isLoading || result.hash.startsWith("Error")) {
       showToast("No hay un hash válido para copiar", "warning");
       return;
     }
-    navigator.clipboard.writeText(result.hash).then(() => {
+    try {
+      await navigator.clipboard.writeText(result.hash);
       showToast("¡Hash copiado al portapapeles!", "success");
-    });
+    } catch {
+      showToast("No fue posible copiar el hash.", "error");
+    }
   };
 
   // --- 4. RENDERIZADO CONDICIONAL DE OPCIONES ---
@@ -112,16 +115,51 @@ const HashGenerator = () => {
                 type="number"
                 id="memoryCost"
                 value={argonOptions.memoryCost}
+                min="1024"
+                max="65536"
                 onChange={(e) =>
                   setArgonOptions({
                     ...argonOptions,
-                    memoryCost: parseInt(e.target.value, 10),
+                    memoryCost: Number.parseInt(e.target.value, 10) || 4096,
                   })
                 }
                 disabled={result.isLoading}
               />
             </div>
-            {/* Repetir para iterations y parallelism */}
+            <div className="input-group">
+              <label htmlFor="iterations">Iteraciones:</label>
+              <input
+                type="number"
+                id="iterations"
+                value={argonOptions.iterations}
+                min="1"
+                max="10"
+                onChange={(e) =>
+                  setArgonOptions({
+                    ...argonOptions,
+                    iterations: Number.parseInt(e.target.value, 10) || 3,
+                  })
+                }
+                disabled={result.isLoading}
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="parallelism">Paralelismo:</label>
+              <input
+                type="number"
+                id="parallelism"
+                value={argonOptions.parallelism}
+                min="1"
+                max="4"
+                onChange={(e) =>
+                  setArgonOptions({
+                    ...argonOptions,
+                    parallelism: Number.parseInt(e.target.value, 10) || 1,
+                  })
+                }
+                disabled={result.isLoading}
+              />
+            </div>
           </>
         );
       default:

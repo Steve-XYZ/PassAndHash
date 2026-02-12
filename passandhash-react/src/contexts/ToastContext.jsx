@@ -1,7 +1,7 @@
-import React, { useState, createContext } from "react";
+import { useState, createContext } from "react";
 import Toast from "../components/Toast";
 
-const ToastContext = createContext();
+export const ToastContext = createContext(null);
 
 export const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]);

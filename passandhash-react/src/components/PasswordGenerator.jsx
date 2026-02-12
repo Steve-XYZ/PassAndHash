@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // Asumiendo que has movido el hook a su nueva ubicación
 import { useToast } from "../hooks/useToast";
 
@@ -91,20 +91,25 @@ const PasswordGenerator = () => {
   const shuffleString = (str) => {
     const arr = str.split("");
     for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1)); // Math.random es seguro aquí, solo estamos barajando
+      const randomValues = new Uint32Array(1);
+      window.crypto.getRandomValues(randomValues);
+      const j = randomValues[0] % (i + 1);
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr.join("");
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = async () => {
     if (!password) {
       showToast("Primero debes generar una contraseña.", "warning");
       return;
     }
-    navigator.clipboard.writeText(password).then(() => {
+    try {
+      await navigator.clipboard.writeText(password);
       showToast("¡Contraseña copiada al portapapeles!", "success");
-    });
+    } catch {
+      showToast("No fue posible copiar la contraseña.", "error");
+    }
   };
 
   // --- JSX DEL COMPONENTE (SIN CAMBIOS) ---
@@ -120,7 +125,7 @@ const PasswordGenerator = () => {
           value={length}
           min="4"
           max="64"
-          onChange={(e) => setLength(parseInt(e.target.value, 10))}
+          onChange={(e) => setLength(Number.parseInt(e.target.value, 10) || 12)}
         />
       </div>
       <div className="checkbox-group">

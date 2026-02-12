@@ -1,5 +1,4 @@
 // src/App.jsx
-import React from "react";
 import HomePage from "./pages/HomePage";
 // Ya no necesitamos './App.css' aquí si los estilos son globales
 // y se importan en `main.jsx` o `index.css`.
