@@ -1,5 +1,9 @@
-import argon2Module from "argon2-browser/dist/argon2-bundled.min.js";
+const argon2 = globalThis.argon2;
 
-const argon2 = argon2Module?.default ?? argon2Module;
+if (!argon2) {
+  throw new Error(
+    "Argon2 no esta disponible. Verifica que /argon2-bundled.min.js cargue antes de main.jsx."
+  );
+}
 
 export default argon2;
