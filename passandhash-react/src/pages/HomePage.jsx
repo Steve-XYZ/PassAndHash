@@ -7,10 +7,14 @@ import ThemeToggle from "../components/ThemeToggle"; // Importamos el nuevo comp
 const HomePage = () => {
   return (
     <div className="container">
-      <ThemeToggle />
-      <HashGenerator />
-      <PasswordGenerator />
-      <HashVerifier />
+      <div className="top-bar">
+        <ThemeToggle />
+      </div>
+      <div className="tools-grid">
+        <HashGenerator />
+        <PasswordGenerator />
+        <HashVerifier />
+      </div>
     </div>
   );
 };
