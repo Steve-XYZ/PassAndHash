@@ -28,7 +28,7 @@ Casos de uso actuales:
 ## 3) Estructura del proyecto (resumen)
 
 - `src/components/HashGenerator.jsx`
-  - UI para generar hash y configurar parámetros.
+  - UI para generar hash, presets de seguridad y parámetros.
 - `src/components/PasswordGenerator.jsx`
   - UI para generar contraseña aleatoria.
 - `src/components/HashVerifier.jsx`
@@ -39,8 +39,12 @@ Casos de uso actuales:
   - Wrapper de Argon2 desde `globalThis.argon2`.
 - `src/contexts/ToastContext.jsx`
   - Context provider para toasts.
+- `src/contexts/LanguageProvider.jsx`
+  - Provider de i18n (ES/EN) con persistencia de idioma.
 - `src/hooks/useToast.js`
   - Hook de acceso al contexto de toast.
+- `src/hooks/useI18n.js`
+  - Hook para traducciones y estado de idioma.
 - `src/index.css`
   - Estilos globales, layout, responsive, tema y componentes visuales.
 - `public/argon2-bundled.min.js`
@@ -134,6 +138,7 @@ Actualmente cubierto:
 
 - Utilidades criptográficas (`src/utils/utils.test.js`).
 - Casos de UI de `HashGenerator` y `HashVerifier`.
+- Selector de idioma y persistencia (`src/components/LanguageSelector.test.jsx`).
 
 Comando:
 
@@ -141,38 +146,23 @@ Comando:
 npm run test
 ```
 
-## 8) Mejoras futuras recomendadas
+## 8) Estado de roadmap
 
-## Prioridad alta (producto)
+Completado:
 
-1. Accesibilidad completa (A11y):
-   - Navegación por teclado exhaustiva.
-   - ARIA y mensajes para lectores de pantalla.
-   - Contraste y focus states auditados.
-2. Internacionalización (i18n):
-   - Español/Inglés configurable.
-3. UX de validaciones:
-   - Mensajes más específicos por campo.
-   - Guardar presets de parámetros (`bcrypt rounds`, `argon2 profile`).
+1. Sprint 1: Base A11y y semántica de formularios.
+2. Sprint 2: i18n ES/EN + persistencia + estandarización de mensajes.
+3. Sprint 3: presets `bcrypt`/`Argon2` + restauración de defaults.
+4. Sprint 4: hardening de entradas + códigos de error + remediación de vulnerabilidades.
 
-## Prioridad media (arquitectura/calidad)
+Pendiente (siguiente etapa):
 
 1. TypeScript gradual:
-   - Empezar por utilidades y tipos de opciones de hash.
+   - Empezar por utilidades y tipos del dominio de hash.
 2. Más cobertura de tests:
-   - Casos de error de clipboard.
-   - Casos edge de inputs vacíos/invalidos.
+   - Integración avanzada y cobertura adicional de edge cases UI.
 3. E2E tests:
-   - Playwright/Cypress para flujos completos en navegador real.
-
-## Prioridad media (seguridad y confiabilidad)
-
-1. Comparación de hash en tiempo constante para flujos determinísticos (cuando aplique).
-2. Hardening de inputs:
-   - Límites estrictos de tamaño.
-   - Sanitización adicional en campos textuales.
-3. Auditoría periódica de dependencias:
-   - `npm audit` + actualización de paquetes.
+   - Playwright para flujos completos en navegador real.
 
 ## Prioridad baja (evolución de producto)
 
@@ -209,3 +199,11 @@ Y revisar:
 - UI en desktop/tablet/móvil.
 - Consola sin errores.
 - Flujos de generación/verificación funcionando para los 4 algoritmos.
+
+## 11) Cierre de servidor local
+
+Para detener el entorno local de desarrollo:
+
+```bash
+Ctrl + C
+```

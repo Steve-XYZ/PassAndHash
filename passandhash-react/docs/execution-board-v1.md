@@ -98,10 +98,10 @@ Epica: Confiabilidad del dominio tecnico.
 
 Historias:
 
-- [ ] E5-H1: Migrar `src/utils` a TypeScript.
-- [ ] E5-H2: Tipos de opciones por algoritmo (discriminated unions).
-- [ ] E5-H3: Tipado de resultados de generacion/verificacion.
-- [ ] E5-H4: Ajustar tests al nuevo tipado.
+- [x] E5-H1: Migrar `src/utils` a TypeScript.
+- [x] E5-H2: Tipos de opciones por algoritmo (discriminated unions).
+- [x] E5-H3: Tipado de resultados de generacion/verificacion.
+- [x] E5-H4: Ajustar tests al nuevo tipado.
 
 Criterios de aceptacion:
 
@@ -116,8 +116,8 @@ Historias:
 
 - [ ] E6-H1: Subir cobertura de unit tests en casos edge.
 - [ ] E6-H2: Tests de integracion de flujos completos.
-- [ ] E6-H3: Implementar E2E (Playwright) para happy/error paths.
-- [ ] E6-H4: Publicar cobertura en CI.
+- [x] E6-H3: Implementar E2E (Playwright) para happy/error paths.
+- [x] E6-H4: Publicar cobertura en CI.
 
 Criterios de aceptacion:
 
@@ -174,8 +174,8 @@ Criterios de aceptacion:
 
 ## Proxima accion recomendada
 
-Iniciar Sprint 5 (TypeScript gradual) en rama de trabajo:
+Continuar Sprint 6 con mayor profundidad (integración + cobertura) en rama:
 
 ```bash
-git checkout -b feat/sprint-5-typescript
+git checkout -b feat/sprint-6-integration-tests
 ```

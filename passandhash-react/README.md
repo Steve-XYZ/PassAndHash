@@ -11,7 +11,7 @@ Aplicación web para trabajar localmente con contraseñas y hashes en el navegad
 ## Stack
 
 - React 19
-- Vite (rolldown-vite)
+- Vite 7
 - bcryptjs
 - argon2-browser (WASM)
 - ESLint
@@ -33,7 +33,9 @@ npm run dev
 
 ```bash
 npm run lint
+npm run typecheck
 npm run test
+npm run test:e2e
 npm run test:coverage
 npm run build
 npm run preview
@@ -58,3 +60,10 @@ npm run preview
 - Lint configurado con ESLint.
 - Pruebas unitarias/componentes críticas con Vitest.
 - CI preparado para validar `lint`, `test` y `build` en push/PR.
+
+## Funcionalidades actuales destacadas
+
+- i18n ES/EN con persistencia de idioma en `localStorage`.
+- Presets de seguridad para `bcrypt` y `Argon2` con restauración de valores por defecto.
+- Hardening de entradas con límites y errores tipificados en capa utilitaria.
+- Layout responsive: 3 columnas desktop, 2 tablet, 1 móvil.

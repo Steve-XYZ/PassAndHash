@@ -15,10 +15,15 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: "./src/test/setup.js",
     globals: true,
+    exclude: ["e2e/**", "node_modules/**", "dist/**"],
     coverage: {
       provider: "v8",
       reporter: ["text", "lcov"],
-      include: ["src/utils/**/*.js", "src/components/**/*.{js,jsx}"],
+      include: [
+        "src/utils/**/*.{js,ts}",
+        "src/components/**/*.{js,jsx}",
+        "src/contexts/**/*.{js,jsx}",
+      ],
     },
   },
 });
