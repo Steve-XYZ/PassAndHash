@@ -1,5 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
-import { generateHashWithOptions, verifyHashWithOptions } from "./utils.js";
+import {
+  ERROR_CODES,
+  generateHashWithOptions,
+  verifyHashWithOptions,
+} from "./utils.js";
 import bcrypt from "bcryptjs";
 import argon2 from "../lib/argon2.js";
 
@@ -56,6 +60,24 @@ describe("generateHashWithOptions", () => {
       "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
     );
   });
+
+  it("falla si la contraseña está vacía", async () => {
+    await expect(
+      generateHashWithOptions({
+        algorithm: "sha256",
+        password: "",
+      })
+    ).rejects.toMatchObject({ code: ERROR_CODES.REQUIRED_PASSWORD });
+  });
+
+  it("falla si el algoritmo no existe", async () => {
+    await expect(
+      generateHashWithOptions({
+        algorithm: "md5",
+        password: "secret",
+      })
+    ).rejects.toMatchObject({ code: ERROR_CODES.UNSUPPORTED_ALGORITHM });
+  });
 });
 
 describe("verifyHashWithOptions", () => {
@@ -92,5 +114,25 @@ describe("verifyHashWithOptions", () => {
         hash,
       })
     ).resolves.toBe(true);
+  });
+
+  it("falla si el hash está vacío", async () => {
+    await expect(
+      verifyHashWithOptions({
+        algorithm: "sha256",
+        password: "abc",
+        hash: "",
+      })
+    ).rejects.toMatchObject({ code: ERROR_CODES.REQUIRED_HASH });
+  });
+
+  it("falla si la contraseña excede límite de seguridad", async () => {
+    await expect(
+      verifyHashWithOptions({
+        algorithm: "sha256",
+        password: "a".repeat(2000),
+        hash: "abc",
+      })
+    ).rejects.toMatchObject({ code: ERROR_CODES.PASSWORD_TOO_LONG });
   });
 });

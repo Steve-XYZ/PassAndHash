@@ -10,10 +10,36 @@ vi.mock("../hooks/useToast", () => ({
 }));
 
 vi.mock("../utils/utils.js", () => ({
+  SECURITY_LIMITS: {
+    password: { maxLength: 1024 },
+    hash: { maxLength: 4096 },
+  },
+  ERROR_CODES: {
+    REQUIRED_PASSWORD: "REQUIRED_PASSWORD",
+    PASSWORD_TOO_LONG: "PASSWORD_TOO_LONG",
+    UNSUPPORTED_ALGORITHM: "UNSUPPORTED_ALGORITHM",
+    HASH_GENERATION_FAILED: "HASH_GENERATION_FAILED",
+  },
   generateHashWithOptions: vi.fn(async () => "hash-generado"),
 }));
 
 describe("HashGenerator", () => {
+  it("permite usar presets y restaurar valores por defecto", async () => {
+    render(<HashGenerator />);
+    const user = userEvent.setup();
+
+    await user.selectOptions(screen.getByLabelText("Preset de seguridad:"), "high");
+    const roundsInput = screen.getByLabelText("Rounds (complejidad):");
+    expect(roundsInput).toHaveValue(12);
+
+    await user.click(
+      screen.getByRole("button", { name: /restaurar valores por defecto/i })
+    );
+    await waitFor(() => {
+      expect(screen.getByLabelText("Rounds (complejidad):")).toHaveValue(10);
+    });
+  });
+
   it("muestra los parámetros completos de Argon2", async () => {
     render(<HashGenerator />);
     const user = userEvent.setup();

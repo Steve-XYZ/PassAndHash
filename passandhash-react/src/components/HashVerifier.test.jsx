@@ -10,6 +10,18 @@ vi.mock("../hooks/useToast", () => ({
 }));
 
 vi.mock("../utils/utils.js", () => ({
+  SECURITY_LIMITS: {
+    password: { maxLength: 1024 },
+    hash: { maxLength: 4096 },
+  },
+  ERROR_CODES: {
+    REQUIRED_PASSWORD: "REQUIRED_PASSWORD",
+    REQUIRED_HASH: "REQUIRED_HASH",
+    PASSWORD_TOO_LONG: "PASSWORD_TOO_LONG",
+    HASH_TOO_LONG: "HASH_TOO_LONG",
+    UNSUPPORTED_ALGORITHM: "UNSUPPORTED_ALGORITHM",
+    HASH_VERIFICATION_FAILED: "HASH_VERIFICATION_FAILED",
+  },
   verifyHashWithOptions: vi.fn(async ({ algorithm, password, hash }) => {
     return algorithm === "sha256" && password === "abc" && hash === "ok";
   }),
