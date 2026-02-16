@@ -24,9 +24,14 @@ const Toast = ({ message, type, id, onClose }) => {
   const toastClass = `toast toast-${type} ${isFadingOut ? "fade-out" : ""}`;
 
   return (
-    <div className={toastClass}>
+    <div className={toastClass} role="alert">
       {message}
-      <button className="toast-close-btn" onClick={() => onClose(id)}>
+      <button
+        type="button"
+        className="toast-close-btn"
+        onClick={() => onClose(id)}
+        aria-label="Cerrar notificacion"
+      >
         &times;
       </button>
     </div>

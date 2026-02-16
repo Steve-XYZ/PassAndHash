@@ -1,7 +1,9 @@
 // src/components/ThemeToggle.jsx
 import { useState, useEffect } from "react";
+import { useI18n } from "../hooks/useI18n";
 
 const ThemeToggle = () => {
+  const { t } = useI18n();
   // 1. La lógica del tema ahora vive aquí, encapsulada y autónoma.
   const [theme, setTheme] = useState(() => {
     // Leemos la preferencia guardada o usamos 'light' por defecto.
@@ -21,7 +23,7 @@ const ThemeToggle = () => {
 
   return (
     <button className="theme-toggle-btn" onClick={toggleTheme}>
-      {theme === "light" ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
+      {theme === "light" ? t("theme.darkMode") : t("theme.lightMode")}
     </button>
   );
 };

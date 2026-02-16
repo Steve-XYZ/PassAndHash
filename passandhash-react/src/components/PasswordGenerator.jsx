@@ -1,6 +1,7 @@
 import { useState } from "react";
 // Asumiendo que has movido el hook a su nueva ubicación
 import { useToast } from "../hooks/useToast";
+import { useI18n } from "../hooks/useI18n";
 
 const PasswordGenerator = () => {
   const [password, setPassword] = useState("");
@@ -11,6 +12,7 @@ const PasswordGenerator = () => {
   const [includeSymbols, setIncludeSymbols] = useState(true); // <-- Cambiado a true por defecto, es una mejor práctica
 
   const showToast = useToast();
+  const { t } = useI18n();
 
   // --- LÓGICA DE GENERACIÓN DE CONTRASEÑA MEJORADA ---
 
@@ -44,7 +46,7 @@ const PasswordGenerator = () => {
 
     if (charPool.length === 0) {
       showToast(
-        "Por favor selecciona al menos un tipo de caracter.",
+        t("messages.pickAtLeastOneCharType"),
         "warning"
       );
       return;
@@ -52,7 +54,7 @@ const PasswordGenerator = () => {
 
     if (length < requiredChars.length) {
       showToast(
-        `La longitud debe ser al menos ${requiredChars.length} para incluir todos los tipos de caracteres seleccionados.`,
+        t("messages.minLengthForCharTypes", { min: requiredChars.length }),
         "error"
       );
       return;
@@ -68,7 +70,7 @@ const PasswordGenerator = () => {
     // 4. Combinamos los caracteres requeridos y los aleatorios, y luego los barajamos
     const unshuffledPassword = requiredChars.join("") + randomChars;
     setPassword(shuffleString(unshuffledPassword));
-    showToast("¡Nueva contraseña generada!", "success");
+    showToast(t("messages.generatePasswordSuccess"), "success");
   };
 
   /**
@@ -101,82 +103,94 @@ const PasswordGenerator = () => {
 
   const copyToClipboard = async () => {
     if (!password) {
-      showToast("Primero debes generar una contraseña.", "warning");
+      showToast(t("messages.generatePasswordFirst"), "warning");
       return;
     }
     try {
       await navigator.clipboard.writeText(password);
-      showToast("¡Contraseña copiada al portapapeles!", "success");
+      showToast(t("messages.passwordCopied"), "success");
     } catch {
-      showToast("No fue posible copiar la contraseña.", "error");
+      showToast(t("messages.passwordCopyError"), "error");
     }
   };
 
   // --- JSX DEL COMPONENTE (SIN CAMBIOS) ---
 
   return (
-    <div className="generator-section">
-      <h2>Generador de Contraseña Aleatoria</h2>
-      <div className="input-group">
-        <label htmlFor="passwordLength">Longitud:</label>
-        <input
-          type="number"
-          id="passwordLength"
-          value={length}
-          min="4"
-          max="64"
-          onChange={(e) => setLength(Number.parseInt(e.target.value, 10) || 12)}
-        />
-      </div>
-      <div className="checkbox-group">
-        <input
-          type="checkbox"
-          id="includeUppercase"
-          checked={includeUppercase}
-          onChange={(e) => setIncludeUppercase(e.target.checked)}
-        />
-        <label htmlFor="includeUppercase">Mayúsculas (A-Z)</label>
-      </div>
-      <div className="checkbox-group">
-        <input
-          type="checkbox"
-          id="includeLowercase"
-          checked={includeLowercase}
-          onChange={(e) => setIncludeLowercase(e.target.checked)}
-        />
-        <label htmlFor="includeLowercase">Minúsculas (a-z)</label>
-      </div>
-      <div className="checkbox-group">
-        <input
-          type="checkbox"
-          id="includeNumbers"
-          checked={includeNumbers}
-          onChange={(e) => setIncludeNumbers(e.target.checked)}
-        />
-        <label htmlFor="includeNumbers">Números (0-9)</label>
-      </div>
-      <div className="checkbox-group">
-        <input
-          type="checkbox"
-          id="includeSymbols"
-          checked={includeSymbols}
-          onChange={(e) => setIncludeSymbols(e.target.checked)}
-        />
-        <label htmlFor="includeSymbols">Símbolos (!@#$)</label>
-      </div>
-      <button className="generate-btn" onClick={generatePassword}>
-        Generar Contraseña
-      </button>
+    <section className="generator-section" aria-labelledby="password-generator-title">
+      <h2 id="password-generator-title">{t("passwordGenerator.title")}</h2>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          generatePassword();
+        }}
+      >
+        <div className="input-group">
+          <label htmlFor="passwordLength">{t("passwordGenerator.length")}</label>
+          <input
+            type="number"
+            id="passwordLength"
+            value={length}
+            min="4"
+            max="64"
+            onChange={(e) =>
+              setLength(Number.parseInt(e.target.value, 10) || 12)
+            }
+          />
+        </div>
+        <fieldset className="options-fieldset">
+          <legend>{t("passwordGenerator.charTypes")}</legend>
+          <div className="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeUppercase"
+              checked={includeUppercase}
+              onChange={(e) => setIncludeUppercase(e.target.checked)}
+            />
+            <label htmlFor="includeUppercase">{t("passwordGenerator.uppercase")}</label>
+          </div>
+          <div className="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeLowercase"
+              checked={includeLowercase}
+              onChange={(e) => setIncludeLowercase(e.target.checked)}
+            />
+            <label htmlFor="includeLowercase">{t("passwordGenerator.lowercase")}</label>
+          </div>
+          <div className="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeNumbers"
+              checked={includeNumbers}
+              onChange={(e) => setIncludeNumbers(e.target.checked)}
+            />
+            <label htmlFor="includeNumbers">{t("passwordGenerator.numbers")}</label>
+          </div>
+          <div className="checkbox-group">
+            <input
+              type="checkbox"
+              id="includeSymbols"
+              checked={includeSymbols}
+              onChange={(e) => setIncludeSymbols(e.target.checked)}
+            />
+            <label htmlFor="includeSymbols">{t("passwordGenerator.symbols")}</label>
+          </div>
+        </fieldset>
+        <button className="generate-btn" type="submit">
+          {t("passwordGenerator.generate")}
+        </button>
+      </form>
       <div className="result-section">
-        <div className="result-label">Contraseña Generada:</div>
-        <div className="hash-display">
-          {password || "Aquí aparecerá tu contraseña"}
+        <div className="result-label">{t("common.security.generatedPasswordLabel")}</div>
+        <div className="hash-display" role="status" aria-live="polite">
+          {password || t("passwordGenerator.placeholder")}
         </div>
         <button className="copy-btn" onClick={copyToClipboard}>
-          📋 Copiar Contraseña
+          {t("common.copyPassword")}
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 
